@@ -1,2 +1,87 @@
-# ElecteroSolve
-ElectroSolve is an educational web app that helps learners understand electrical engineering concepts using explanations and calculators, with optional advanced tools for registered users.
+<!DOCTYPE html> <html> <head> <title>ElectroSolve</title> <style>
+body {<h2>Welcome to ElectroSolve</h2>
+<p>
+ElectroSolve is a simple and educational web-based application designed to help students, technicians, and beginners understand and solve basic electrical engineering calculations.
+</p>
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  padding: 20px;
+}
+
+.header {
+  background-color: #1e88e5;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 15px 15px 0 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1e88e5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+.result {
+  background-color: #f1f8e9;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+  word-wrap: break-word;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+</style> </head> <body> <div class="app"> <div class="header">ElectroSolve</div>
+<label>Voltage (V)</label>
+<input type="number" id="voltage">
+<label>Resistance R1 (Ω)</label>
+<input type="number" id="r1">
+<label>Resistance R2 (Ω)</label>
+<input type="number" id="r2">
+<button onclick="calculate()">Calculate</button>
+<button onclick="resetFields()">Reset</button>
+<div class="result" id="result"></div>
+</div> <script> function calculate() { let V = Number(document.getElementById("voltage").value); let R1 = Number(document.getElementById("r1").value); let R2 = Number(document.getElementById("r2").value); if (V <= 0 || R1 <= 0 || R2 <= 0) { document.getElementById("result").innerHTML = "<span class='error'>Please enter values greater than zero.</span>"; return; } let I = V / R1; let P = V * I; let series = R1 + R2; let parallel = 1 / (1 / R1 + 1 / R2); document.getElementById("result").innerHTML = "<b>Ohm's Law:</b><br>" + "Current (I) = " + I.toFixed(2) + " A<br><br>" + "<b>Power:</b><br>" + "Power (P) = " + P.toFixed(2) + " W<br><br>" + "<b>Series Resistance:</b><br>" + "Rs = R1 + R2 = " + series.toFixed(2) + " Ω<br><br>" + "<b>Parallel Resistance:</b><br>" + "Rp = " + parallel.toFixed(2) + " Ω"; } function resetFields() { document.getElementById("voltage").value = ""; document.getElementById("r1").value = ""; document.getElementById("r2").value = ""; document.getElementById("result").innerHTML = ""; } </script> </body> </html>

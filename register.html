@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+</head>
+<body>
+  <h2>Create Account</h2>
+
+  <input type="text" id="contact" placeholder="Email or Phone"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+
+  <button onclick="register()">Register</button>
+
+  <p>Already have an account?
+    <a href="index.html">Login</a>
+  </p>
+
+  <script>
+    function register() {
+      const contact = document.getElementById("contact").value;
+      const password = document.getElementById("password").value;
+
+      if (!contact || !password) {
+        alert("Fill all fields");
+        return;
+      }
+
+      localStorage.setItem("userContact", contact);
+      auth.signInWithEmailAndPassword(email, password);
+
+      alert("Account created successfully!");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
