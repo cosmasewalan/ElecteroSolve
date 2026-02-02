@@ -69,6 +69,22 @@ button:hover {
     <option value="joule">Joule's Law</option>
     <option value="power">Electric Power</option>
     <option value="series">Series Resistance</option>
+    <div id="selector-container">
+  <label>Select Calculator</label>
+  <select id="calculator" onchange="showCalculator()">
+    <option value="">-- Choose --</option>
+    <option value="ohm">Ohm's Law</option>
+    <option value="joule">Joule's Law</option>
+    <option value="power">Electric Power</option>
+    <option value="series">Series Resistance</option>
+    <option value="parallel">Parallel Resistance</option>
+    <option value="divider">Voltage Divider</option>
+  </select>
+</div>
+
+<div id="form-area"></div>
+<div class="result" id="result"></div>
+
   </select>
 
   <div id="form-area"></div>
