@@ -17,12 +17,13 @@
 }
 
 .container {
-  background: white;
+  width: 95%;        /* almost full width */
+  max-width: 800px;  /* bigger on desktop */
   padding: 40px;
-  width: 90%;
-  max-width: 600px; /* larger for computer screen */
   border-radius: 16px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  background: white;
+  margin: 20px auto; /* center horizontally */
 }
 
 input, select, button {
@@ -69,18 +70,6 @@ button:hover {
     <option value="joule">Joule's Law</option>
     <option value="power">Electric Power</option>
     <option value="series">Series Resistance</option>
-  </select>
-</div>
-<div id="selector-container">
-  <label>Select Calculator</label>
-  <select id="calculator" onchange="showCalculator()">
-    <option value="">-- Choose --</option>
-    <option value="ohm">Ohm's Law</option>
-    <option value="joule">Joule's Law</option>
-    <option value="power">Electric Power</option>
-    <option value="series">Series Resistance</option>
-    <option value="parallel">Parallel Resistance</option>
-    <option value="divider">Voltage Divider</option>
   </select>
 </div>
 
