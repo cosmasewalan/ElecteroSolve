@@ -1,87 +1,155 @@
-<!DOCTYPE html> <html> <head> <title>ElectroSolve</title> <style>
-body {<h2>Welcome to ElectroSolve</h2>
-<p>
-ElectroSolve is a simple and educational web-based application designed to help students, technicians, and beginners understand and solve basic electrical engineering calculations.
-</p>
-  font-family: 'Roboto', Arial, sans-serif;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ElectroSolve ⚡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1f4037, #99f2c8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #1f4037;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16332c;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>ElectroSolve ⚡</h1>
+
+  <label>Select Calculator</label>
+  <select id="calculator" onchange="showCalculator()">
+    <option value="">-- Choose --</option>
+    <option value="ohm">Ohm's Law</option>
+    <option value="joule">Joule's Law</option>
+    <option value="power">Electric Power</option>
+    <option value="series">Series Resistance</option>
+  </select>
+
+  <div id="form-area"></div>
+
+  <div class="result" id="result"></div>
+
+</div>
+
+<script>
+function showCalculator() {
+  const choice = document.getElementById("calculator").value;
+  const formArea = document.getElementById("form-area");
+  document.getElementById("result").innerHTML = "";
+
+  if (choice === "ohm") {
+    formArea.innerHTML = `
+      <input type="number" id="voltage" placeholder="Voltage (V)">
+      <input type="number" id="resistance" placeholder="Resistance (Ω)">
+      <button onclick="calculateOhm()">Calculate Current</button>
+    `;
+  }
+
+  else if (choice === "joule") {
+    formArea.innerHTML = `
+      <input type="number" id="current" placeholder="Current (A)">
+      <input type="number" id="resistance" placeholder="Resistance (Ω)">
+      <input type="number" id="time" placeholder="Time (s)">
+      <button onclick="calculateJoule()">Calculate Energy</button>
+    `;
+  }
+
+  else if (choice === "power") {
+    formArea.innerHTML = `
+      <input type="number" id="voltage" placeholder="Voltage (V)">
+      <input type="number" id="current" placeholder="Current (A)">
+      <button onclick="calculatePower()">Calculate Power</button>
+    `;
+  }
+
+  else if (choice === "series") {
+    formArea.innerHTML = `
+      <input type="number" id="r1" placeholder="R1 (Ω)">
+      <input type="number" id="r2" placeholder="R2 (Ω)">
+      <button onclick="calculateSeries()">Calculate Total Resistance</button>
+    `;
+  }
+
+  else {
+    formArea.innerHTML = "";
+  }
 }
 
-.app {
-  background-color: #ffffff;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  padding: 20px;
+function calculateOhm() {
+  const V = parseFloat(document.getElementById("voltage").value);
+  const R = parseFloat(document.getElementById("resistance").value);
+  const I = V / R;
+  document.getElementById("result").innerHTML = "Current = " + I.toFixed(2) + " A";
 }
 
-.header {
-  background-color: #1e88e5;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  border-radius: 15px 15px 0 0;
-  font-size: 24px;
-  font-weight: bold;
+function calculateJoule() {
+  const I = parseFloat(document.getElementById("current").value);
+  const R = parseFloat(document.getElementById("resistance").value);
+  const t = parseFloat(document.getElementById("time").value);
+  const E = I * I * R * t;
+  document.getElementById("result").innerHTML = "Energy = " + E.toFixed(2) + " Joules";
 }
 
-label {
-  font-weight: bold;
+function calculatePower() {
+  const V = parseFloat(document.getElementById("voltage").value);
+  const I = parseFloat(document.getElementById("current").value);
+  const P = V * I;
+  document.getElementById("result").innerHTML = "Power = " + P.toFixed(2) + " Watts";
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+function calculateSeries() {
+  const R1 = parseFloat(document.getElementById("r1").value);
+  const R2 = parseFloat(document.getElementById("r2").value);
+  const total = R1 + R2;
+  document.getElementById("result").innerHTML = "Total Resistance = " + total.toFixed(2) + " Ω";
 }
+</script>
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  border: none;
-  background-color: #1e88e5;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: #1565c0;
-}
-
-.result {
-  background-color: #f1f8e9;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-size: 15px;
-  word-wrap: break-word;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
-}
-</style> </head> <body> <div class="app"> <div class="header">ElectroSolve</div>
-<label>Voltage (V)</label>
-<input type="number" id="voltage">
-<label>Resistance R1 (Ω)</label>
-<input type="number" id="r1">
-<label>Resistance R2 (Ω)</label>
-<input type="number" id="r2">
-<button onclick="calculate()">Calculate</button>
-<button onclick="resetFields()">Reset</button>
-<div class="result" id="result"></div>
-</div> <script> function calculate() { let V = Number(document.getElementById("voltage").value); let R1 = Number(document.getElementById("r1").value); let R2 = Number(document.getElementById("r2").value); if (V <= 0 || R1 <= 0 || R2 <= 0) { document.getElementById("result").innerHTML = "<span class='error'>Please enter values greater than zero.</span>"; return; } let I = V / R1; let P = V * I; let series = R1 + R2; let parallel = 1 / (1 / R1 + 1 / R2); document.getElementById("result").innerHTML = "<b>Ohm's Law:</b><br>" + "Current (I) = " + I.toFixed(2) + " A<br><br>" + "<b>Power:</b><br>" + "Power (P) = " + P.toFixed(2) + " W<br><br>" + "<b>Series Resistance:</b><br>" + "Rs = R1 + R2 = " + series.toFixed(2) + " Ω<br><br>" + "<b>Parallel Resistance:</b><br>" + "Rp = " + parallel.toFixed(2) + " Ω"; } function resetFields() { document.getElementById("voltage").value = ""; document.getElementById("r1").value = ""; document.getElementById("r2").value = ""; document.getElementById("result").innerHTML = ""; } </script> </body> </html>
+</body>
+</html>
