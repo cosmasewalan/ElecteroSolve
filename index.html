@@ -62,6 +62,7 @@
 <div class="container">
   <h1>ElectroSolve ⚡</h1>
 
+  <div id="selector-container">
   <label>Select Calculator</label>
   <select id="calculator" onchange="showCalculator()">
     <option value="">-- Choose --</option>
@@ -70,12 +71,13 @@
     <option value="power">Electric Power</option>
     <option value="series">Series Resistance</option>
     <option value="parallel">Parallel Resistance</option>
-<option value="divider">Voltage Divider</option>
+    <option value="divider">Voltage Divider</option>
   </select>
+</div>
 
-  <div id="form-area"></div>
+<div id="form-area"></div>
+<div class="result" id="result"></div>
 
-  <div class="result" id="result"></div>
 
 </div>
 
