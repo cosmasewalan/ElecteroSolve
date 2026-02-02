@@ -84,60 +84,56 @@ function showCalculator() {
   const formArea = document.getElementById("form-area");
   document.getElementById("result").innerHTML = "";
 
+  // Hide the dropdown after choosing
+  if (choice !== "") {
+    document.getElementById("selector-container").style.display = "none";
+  }
+
+  // Show the chosen calculator
   if (choice === "ohm") {
     formArea.innerHTML = `
       <input type="number" id="voltage" placeholder="Voltage (V)">
       <input type="number" id="resistance" placeholder="Resistance (Ω)">
       <button onclick="calculateOhm()">Calculate Current</button>
     `;
-  }
-
-  else if (choice === "joule") {
+  } else if (choice === "joule") {
     formArea.innerHTML = `
       <input type="number" id="current" placeholder="Current (A)">
       <input type="number" id="resistance" placeholder="Resistance (Ω)">
       <input type="number" id="time" placeholder="Time (s)">
       <button onclick="calculateJoule()">Calculate Energy</button>
     `;
-  }
-
-  else if (choice === "power") {
+  } else if (choice === "power") {
     formArea.innerHTML = `
       <input type="number" id="voltage" placeholder="Voltage (V)">
       <input type="number" id="current" placeholder="Current (A)">
       <button onclick="calculatePower()">Calculate Power</button>
     `;
-  }
-
-  else if (choice === "series") {
+  } else if (choice === "series") {
     formArea.innerHTML = `
       <input type="number" id="r1" placeholder="R1 (Ω)">
       <input type="number" id="r2" placeholder="R2 (Ω)">
       <button onclick="calculateSeries()">Calculate Total Resistance</button>
     `;
-  }
-
-  else if (choice === "parallel") {
+  } else if (choice === "parallel") {
     formArea.innerHTML = `
       <input type="number" id="r1" placeholder="R1 (Ω)">
       <input type="number" id="r2" placeholder="R2 (Ω)">
       <button onclick="calculateParallel()">Calculate Parallel Resistance</button>
     `;
-  }
-
-  else if (choice === "divider") {
+  } else if (choice === "divider") {
     formArea.innerHTML = `
       <input type="number" id="vin" placeholder="Input Voltage (V)">
       <input type="number" id="r1" placeholder="R1 (Ω)">
       <input type="number" id="r2" placeholder="R2 (Ω)">
       <button onclick="calculateDivider()">Calculate Vout</button>
     `;
-  }
-
-  else {
+  } else {
     formArea.innerHTML = "";
+    document.getElementById("selector-container").style.display = "block";
   }
 }
+
 
 /* ---------- CALCULATIONS WITH VALIDATION ---------- */
 
