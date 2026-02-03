@@ -112,10 +112,7 @@ button:hover {
 </head>
 
 <body>
-<div class="main-menu">
-  <button onclick="showSection('electrical')">⚡ Electrical</button>
-  <button onclick="showSection('math')">🔢 Math</button>
-  <button onclick="showSection('theory')">📘 Theory</button>
+  
 <div class="container">
 </div>
 
@@ -131,44 +128,10 @@ button:hover {
 <div id="electrical" class="section">
   <!-- Your current dropdown + electrical calculators -->
 </div>
-
-<div id="math" class="section" style="display:none;">
-  <h2>Math Calculator</h2>
-  <input type="number" id="num1" placeholder="First number">
-  <input type="number" id="num2" placeholder="Second number">
-  <button onclick="add()">Add</button>
-  <div id="mathResult"></div>
-</div>
-
-<div id="theory" class="section" style="display:none;">
-  <h2>Theory Section</h2>
-  <p>Ohm's Law states that V = I × R.</p>
-  <p>Joule's Law states that Energy = I² × R × t.</p>
-</div>
-
-<div id="calculatorArea" class="hidden"></div>
-<div class="result" id="result"></div>
-
+  
 </div>
 
 <script>
-  
-function showSection(sectionId) {
-  document.querySelectorAll('.section').forEach(sec => {
-    sec.style.display = "none";
-  });
-
-  document.getElementById(sectionId).style.display = "block";
-}
-
-function add() {
-  let a = parseFloat(document.getElementById("num1").value);
-  let b = parseFloat(document.getElementById("num2").value);
-
-  if (!isNaN(a) && !isNaN(b)) {
-    document.getElementById("mathResult").innerHTML = "Result: " + (a + b);
-  }
-}
 
 function openCalc(type) {
   document.getElementById("menu").classList.add("hidden");
