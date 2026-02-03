@@ -32,33 +32,22 @@ body {
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-size: 28px;
   color: #222;
 }
 
-select, input, button {
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-select:focus, input:focus {
-  outline: none;
-  border-color: #243b55;
-  box-shadow: 0 0 10px rgba(36,59,85,0.3);
-}
-
 button {
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
   background: #243b55;
   color: white;
-  border: none;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 button:hover {
@@ -66,19 +55,31 @@ button:hover {
   transform: scale(1.05);
 }
 
-#result {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #141e30;
-  animation: fadeIn 0.5s ease-in-out;
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
-/* Calculator section */
-.calculator {
+input:focus {
+  outline: none;
+  border-color: #243b55;
+  box-shadow: 0 0 10px rgba(36,59,85,0.3);
+}
+
+#calculatorArea {
   margin-top: 20px;
-  display: none;
-  animation: slideUp 0.5s ease forwards;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #141e30;
 }
 
 /* Animations */
@@ -86,58 +87,35 @@ button:hover {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 </style>
 </head>
 
 <body>
-  
+
 <div class="container">
-</div>
+  <h1>ElectroSolve ⚡</h1>
 
-<h1>ElectroSolve ⚡</h1>
+  <div id="menu">
+    <button onclick="openCalc('ohm')">Ohm's Law</button>
+    <button onclick="openCalc('joule')">Joule's Law</button>
+    <button onclick="openCalc('power')">Electric Power</button>
+    <button onclick="openCalc('series')">Series Resistance</button>
+    <button onclick="openCalc('parallel')">Parallel Resistance</button>
+    <button onclick="openCalc('divider')">Voltage Divider</button>
+  </div>
 
-<div id="menu" class="menu">
-  <button onclick="openCalc('ohm')">Ohm's Law</button>
-  <button onclick="openCalc('joule')">Joule's Law</button>
-  <button onclick="openCalc('power')">Electric Power</button>
-  <button onclick="openCalc('series')">Series Resistance</button>
-  <button onclick="openCalc('parallel')">Parallel Resistance</button>
-  <button onclick="openCalc('divider')">Voltage Divider</button>
-<div id="electrical" class="section">
-  <!-- Your current dropdown + electrical calculators -->
-</div>
-  
+  <div id="calculatorArea"></div>
+  <div id="result"></div>
 </div>
 
 <script>
+const result = document.getElementById("result");
 
 function openCalc(type) {
-  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("menu").style.display = "none";
   const area = document.getElementById("calculatorArea");
-  area.classList.remove("hidden");
+  area.innerHTML = "";
   result.innerHTML = "";
-  function showCalculator(value) {
-  document.querySelectorAll('.calculator').forEach(calc => {
-    calc.style.display = "none";
-  });
-
-  if (value) {
-    document.getElementById(value).style.display = "block";
-  }
-}
-
 
   if (type === "ohm") {
     area.innerHTML = `
@@ -147,8 +125,7 @@ function openCalc(type) {
       <button onclick="goBack()">Back</button>
     `;
   }
-
-  if (type === "joule") {
+  else if (type === "joule") {
     area.innerHTML = `
       <input type="number" id="current" placeholder="Current (A)">
       <input type="number" id="resistance" placeholder="Resistance (Ω)">
@@ -157,8 +134,7 @@ function openCalc(type) {
       <button onclick="goBack()">Back</button>
     `;
   }
-
-  if (type === "power") {
+  else if (type === "power") {
     area.innerHTML = `
       <input type="number" id="voltage" placeholder="Voltage (V)">
       <input type="number" id="current" placeholder="Current (A)">
@@ -166,8 +142,7 @@ function openCalc(type) {
       <button onclick="goBack()">Back</button>
     `;
   }
-
-  if (type === "series") {
+  else if (type === "series") {
     area.innerHTML = `
       <input type="number" id="r1" placeholder="R1 (Ω)">
       <input type="number" id="r2" placeholder="R2 (Ω)">
@@ -175,8 +150,7 @@ function openCalc(type) {
       <button onclick="goBack()">Back</button>
     `;
   }
-
-  if (type === "parallel") {
+  else if (type === "parallel") {
     area.innerHTML = `
       <input type="number" id="r1" placeholder="R1 (Ω)">
       <input type="number" id="r2" placeholder="R2 (Ω)">
@@ -184,8 +158,7 @@ function openCalc(type) {
       <button onclick="goBack()">Back</button>
     `;
   }
-
-  if (type === "divider") {
+  else if (type === "divider") {
     area.innerHTML = `
       <input type="number" id="vin" placeholder="Input Voltage (V)">
       <input type="number" id="r1" placeholder="R1 (Ω)">
@@ -197,61 +170,54 @@ function openCalc(type) {
 }
 
 function goBack() {
-  document.getElementById("calculatorArea").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
+  document.getElementById("calculatorArea").innerHTML = "";
+  document.getElementById("menu").style.display = "block";
   result.innerHTML = "";
 }
 
 function calculateOhm() {
-  const V = parseFloat(voltage.value);
-  const R = parseFloat(resistance.value);
-  if (isNaN(V) || isNaN(R) || R === 0)
-    return result.innerHTML = "Enter valid values.";
+  const V = parseFloat(document.getElementById("voltage").value);
+  const R = parseFloat(document.getElementById("resistance").value);
+  if (isNaN(V) || isNaN(R) || R === 0) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Current = " + (V/R).toFixed(3) + " A";
 }
 
 function calculateJoule() {
-  const I = parseFloat(current.value);
-  const R = parseFloat(resistance.value);
-  const t = parseFloat(time.value);
-  if (isNaN(I) || isNaN(R) || isNaN(t))
-    return result.innerHTML = "Enter valid values.";
+  const I = parseFloat(document.getElementById("current").value);
+  const R = parseFloat(document.getElementById("resistance").value);
+  const t = parseFloat(document.getElementById("time").value);
+  if (isNaN(I) || isNaN(R) || isNaN(t)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Energy = " + (I*I*R*t).toFixed(3) + " J";
 }
 
 function calculatePower() {
-  const V = parseFloat(voltage.value);
-  const I = parseFloat(current.value);
-  if (isNaN(V) || isNaN(I))
-    return result.innerHTML = "Enter valid values.";
+  const V = parseFloat(document.getElementById("voltage").value);
+  const I = parseFloat(document.getElementById("current").value);
+  if (isNaN(V) || isNaN(I)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Power = " + (V*I).toFixed(3) + " W";
 }
 
 function calculateSeries() {
-  const R1 = parseFloat(r1.value);
-  const R2 = parseFloat(r2.value);
-  if (isNaN(R1) || isNaN(R2))
-    return result.innerHTML = "Enter valid values.";
+  const R1 = parseFloat(document.getElementById("r1").value);
+  const R2 = parseFloat(document.getElementById("r2").value);
+  if (isNaN(R1) || isNaN(R2)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Total Resistance = " + (R1+R2).toFixed(3) + " Ω";
 }
 
 function calculateParallel() {
-  const R1 = parseFloat(r1.value);
-  const R2 = parseFloat(r2.value);
-  if (isNaN(R1) || isNaN(R2) || R1 === 0 || R2 === 0)
-    return result.innerHTML = "Enter valid values.";
+  const R1 = parseFloat(document.getElementById("r1").value);
+  const R2 = parseFloat(document.getElementById("r2").value);
+  if (isNaN(R1) || isNaN(R2) || R1 === 0 || R2 === 0) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Parallel Resistance = " + (1/((1/R1)+(1/R2))).toFixed(3) + " Ω";
 }
 
 function calculateDivider() {
-  const Vin = parseFloat(vin.value);
-  const R1 = parseFloat(r1.value);
-  const R2 = parseFloat(r2.value);
-  if (isNaN(Vin) || isNaN(R1) || isNaN(R2) || (R1+R2) === 0)
-    return result.innerHTML = "Enter valid values.";
+  const Vin = parseFloat(document.getElementById("vin").value);
+  const R1 = parseFloat(document.getElementById("r1").value);
+  const R2 = parseFloat(document.getElementById("r2").value);
+  if (isNaN(Vin) || isNaN(R1) || isNaN(R2) || (R1+R2) === 0) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Output Voltage = " + (Vin*(R2/(R1+R2))).toFixed(3) + " V";
 }
-
 </script>
 
 </body>
