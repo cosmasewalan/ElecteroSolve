@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ElectroSolve ⚡</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElectroSolve ⚡</title>
 
-  <style>
-   body {
+<style>
+body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #1f4037, #99f2c8);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* top of page so space is free */
-  min-height: 100vh;
-  padding-top: 50px; /* some top spacing */
+  align-items: flex-start;
+  padding-top: 50px;
 }
 
 .container {
-  width: 120%;        /* almost full width */
-  max-width: 1100px;  /* bigger on desktop */
-  padding: 70px;
-  border-radius: 20px;
-  box-shadow: 0 19px 60px rgba(0,0,0,0.2);
   background: white;
-  margin: 40px auto; /* center horizontally */
+  width: 95%;
+  max-width: 800px;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
-input, select, button {
+h1 {
+  text-align: center;
+}
+
+select, input, button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin: 10px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -40,7 +43,6 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
@@ -49,114 +51,147 @@ button:hover {
 
 .result {
   margin-top: 20px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
-  font-size: 18px;
 }
 
+.calc-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  </style>
+@media screen and (min-width: 700px) {
+  .calc-fields {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .calc-fields input {
+    flex: 1 1 45%;
+  }
+
+  .calc-fields button {
+    flex: 1 1 100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <h1>ElectroSolve ⚡</h1>
+<h1>ElectroSolve ⚡</h1>
 
- <label>Select Calculator</label>
-  <select id="calculator" onchange="showCalculator()">
-    <option value="">-- Choose --</option>
-    <option value="ohm">Ohm's Law</option>
-    <option value="joule">Joule's Law</option>
-    <option value="power">Electric Power</option>
-    <option value="series">Series Resistance</option>
-  </select>
+<div id="selector-container">
+<select id="calculator" onchange="showCalculator()">
+<option value="">-- Choose Calculator --</option>
+<option value="ohm">Ohm's Law</option>
+<option value="joule">Joule's Law</option>
+<option value="power">Electric Power</option>
+<option value="series">Series Resistance</option>
+<option value="parallel">Parallel Resistance</option>
+<option value="divider">Voltage Divider</option>
+</select>
 </div>
-<button onclick="alert('Working')">Test</button>
 
 <div id="form-area"></div>
 <div class="result" id="result"></div>
-
-<div id="form-area"></div>
-<div class="result" id="result"></div>
-
-  </select>
-
-  <div id="form-area"></div>
-
-  <div class="result" id="result"></div>
-
 
 </div>
 
 <script>
-function showCalculator() {
-  const choice = document.getElementById("calculator").value;
-  const formArea = document.getElementById("form-area");
-  document.getElementById("result").innerHTML = "";
 
-  // Hide the dropdown after choosing
+function showCalculator() {
+  const choice = calculator.value;
+  const formArea = document.getElementById("form-area");
+  result.innerHTML = "";
+
   if (choice !== "") {
     document.getElementById("selector-container").style.display = "none";
   }
 
-  // Show the chosen calculator
   if (choice === "ohm") {
     formArea.innerHTML = `
-      <input type="number" id="voltage" placeholder="Voltage (V)">
-      <input type="number" id="resistance" placeholder="Resistance (Ω)">
-      <button onclick="calculateOhm()">Calculate Current</button>
+      <div class="calc-fields">
+        <input type="number" id="voltage" placeholder="Voltage (V)">
+        <input type="number" id="resistance" placeholder="Resistance (Ω)">
+        <button onclick="calculateOhm()">Calculate Current</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else if (choice === "joule") {
+  }
+
+  else if (choice === "joule") {
     formArea.innerHTML = `
-      <input type="number" id="current" placeholder="Current (A)">
-      <input type="number" id="resistance" placeholder="Resistance (Ω)">
-      <input type="number" id="time" placeholder="Time (s)">
-      <button onclick="calculateJoule()">Calculate Energy</button>
+      <div class="calc-fields">
+        <input type="number" id="current" placeholder="Current (A)">
+        <input type="number" id="resistance" placeholder="Resistance (Ω)">
+        <input type="number" id="time" placeholder="Time (s)">
+        <button onclick="calculateJoule()">Calculate Energy</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else if (choice === "power") {
+  }
+
+  else if (choice === "power") {
     formArea.innerHTML = `
-      <input type="number" id="voltage" placeholder="Voltage (V)">
-      <input type="number" id="current" placeholder="Current (A)">
-      <button onclick="calculatePower()">Calculate Power</button>
+      <div class="calc-fields">
+        <input type="number" id="voltage" placeholder="Voltage (V)">
+        <input type="number" id="current" placeholder="Current (A)">
+        <button onclick="calculatePower()">Calculate Power</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else if (choice === "series") {
+  }
+
+  else if (choice === "series") {
     formArea.innerHTML = `
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateSeries()">Calculate Total Resistance</button>
+      <div class="calc-fields">
+        <input type="number" id="r1" placeholder="R1 (Ω)">
+        <input type="number" id="r2" placeholder="R2 (Ω)">
+        <button onclick="calculateSeries()">Calculate Total Resistance</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else if (choice === "parallel") {
+  }
+
+  else if (choice === "parallel") {
     formArea.innerHTML = `
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateParallel()">Calculate Parallel Resistance</button>
+      <div class="calc-fields">
+        <input type="number" id="r1" placeholder="R1 (Ω)">
+        <input type="number" id="r2" placeholder="R2 (Ω)">
+        <button onclick="calculateParallel()">Calculate Parallel Resistance</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else if (choice === "divider") {
+  }
+
+  else if (choice === "divider") {
     formArea.innerHTML = `
-      <input type="number" id="vin" placeholder="Input Voltage (V)">
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateDivider()">Calculate Vout</button>
+      <div class="calc-fields">
+        <input type="number" id="vin" placeholder="Input Voltage (V)">
+        <input type="number" id="r1" placeholder="R1 (Ω)">
+        <input type="number" id="r2" placeholder="R2 (Ω)">
+        <button onclick="calculateDivider()">Calculate Vout</button>
+        <button onclick="goBack()">Back</button>
+      </div>
     `;
-  } else {
-    formArea.innerHTML = "";
-    document.getElementById("selector-container").style.display = "block";
   }
 }
 
-
-/* ---------- CALCULATIONS WITH VALIDATION ---------- */
+function goBack() {
+  formArea.innerHTML = "";
+  result.innerHTML = "";
+  document.getElementById("selector-container").style.display = "block";
+  calculator.value = "";
+}
 
 function calculateOhm() {
   const V = parseFloat(voltage.value);
   const R = parseFloat(resistance.value);
-
-  if (isNaN(V) || isNaN(R) || R === 0) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
+  if (isNaN(V) || isNaN(R) || R === 0) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Current = " + (V / R).toFixed(3) + " A";
 }
 
@@ -164,65 +199,41 @@ function calculateJoule() {
   const I = parseFloat(current.value);
   const R = parseFloat(resistance.value);
   const t = parseFloat(time.value);
-
-  if (isNaN(I) || isNaN(R) || isNaN(t)) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
+  if (isNaN(I) || isNaN(R) || isNaN(t)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Energy = " + (I * I * R * t).toFixed(3) + " Joules";
 }
 
 function calculatePower() {
   const V = parseFloat(voltage.value);
   const I = parseFloat(current.value);
-
-  if (isNaN(V) || isNaN(I)) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
+  if (isNaN(V) || isNaN(I)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Power = " + (V * I).toFixed(3) + " Watts";
 }
 
 function calculateSeries() {
   const R1 = parseFloat(r1.value);
   const R2 = parseFloat(r2.value);
-
-  if (isNaN(R1) || isNaN(R2)) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
+  if (isNaN(R1) || isNaN(R2)) return result.innerHTML = "Enter valid values.";
   result.innerHTML = "Total Resistance = " + (R1 + R2).toFixed(3) + " Ω";
 }
 
 function calculateParallel() {
   const R1 = parseFloat(r1.value);
   const R2 = parseFloat(r2.value);
-
-  if (isNaN(R1) || isNaN(R2) || R1 === 0 || R2 === 0) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
-  const total = 1 / ((1 / R1) + (1 / R2));
-  result.innerHTML = "Parallel Resistance = " + total.toFixed(3) + " Ω";
+  if (isNaN(R1) || isNaN(R2) || R1 === 0 || R2 === 0)
+    return result.innerHTML = "Enter valid values.";
+  result.innerHTML = "Parallel Resistance = " + (1 / ((1/R1)+(1/R2))).toFixed(3) + " Ω";
 }
 
 function calculateDivider() {
   const Vin = parseFloat(vin.value);
   const R1 = parseFloat(r1.value);
   const R2 = parseFloat(r2.value);
-
-  if (isNaN(Vin) || isNaN(R1) || isNaN(R2) || (R1 + R2) === 0) {
-    result.innerHTML = "Enter valid values.";
-    return;
-  }
-
-  const Vout = Vin * (R2 / (R1 + R2));
-  result.innerHTML = "Output Voltage = " + Vout.toFixed(3) + " V";
+  if (isNaN(Vin) || isNaN(R1) || isNaN(R2) || (R1+R2)===0)
+    return result.innerHTML = "Enter valid values.";
+  result.innerHTML = "Output Voltage = " + (Vin*(R2/(R1+R2))).toFixed(3) + " V";
 }
+
 </script>
 
 </body>
