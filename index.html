@@ -128,6 +128,16 @@ function openCalc(type) {
   const area = document.getElementById("calculatorArea");
   area.classList.remove("hidden");
   result.innerHTML = "";
+  function showCalculator(value) {
+  document.querySelectorAll('.calculator').forEach(calc => {
+    calc.style.display = "none";
+  });
+
+  if (value) {
+    document.getElementById(value).style.display = "block";
+  }
+}
+
 
   if (type === "ohm") {
     area.innerHTML = `
