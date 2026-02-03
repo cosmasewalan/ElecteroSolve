@@ -1,61 +1,138 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register - ElectroSolve</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - ElectroSolve ⚡</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    .register-box {
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      width: 300px;
-      text-align: center;
-    }
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55);
+}
 
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+.container {
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  text-align: center;
+}
 
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #00bfff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+h1 {
+  margin-bottom: 25px;
+  color: #222;
+}
 
-    button:hover {
-      background-color: #009acd;
-    }
-  </style>
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #243b55;
+  box-shadow: 0 0 10px rgba(36,59,85,0.3);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: none;
+  background: #243b55;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #141e30;
+  transform: scale(1.03);
+}
+
+p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+a {
+  color: #243b55;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
 </head>
 
 <body>
+  <div class="container">
+    <h1>Create an Account ⚡</h1>
 
-<div class="register-box">
-  <h2>Create Account</h2>
-  <input type="text" placeholder="Phone or Email">
-  <input type="password" placeholder="Password">
-  <button>Register</button>
-</div>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="password" id="confirm" placeholder="Confirm Password" required>
 
+    <button onclick="register()">Register</button>
+
+    <p>Already have an account? <a href="login.html">Login</a></p>
+    <p style="font-size:12px; margin-top:10px;">
+      By registering, you agree to our 
+      <a href="terms.html">Terms & Conditions</a> and 
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <p id="message" style="color:red; font-weight:bold;"></p>
+  </div>
+
+<script>
+function register() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirm = document.getElementById("confirm").value.trim();
+  const msg = document.getElementById("message");
+
+  if(!name || !email || !password || !confirm) {
+    msg.innerHTML = "Please fill in all fields.";
+    return;
+  }
+
+  if(password !== confirm) {
+    msg.innerHTML = "Passwords do not match.";
+    return;
+  }
+
+  // Temporary demo storage (replace with backend later)
+  localStorage.setItem("demoUserEmail", email);
+  localStorage.setItem("demoUserPass", password);
+
+  msg.style.color = "green";
+  msg.innerHTML = "Registration successful! Redirecting to login...";
+  setTimeout(() => {
+    window.location.href = "login.html";
+  }, 1500);
+}
+</script>
 </body>
 </html>
