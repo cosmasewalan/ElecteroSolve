@@ -117,56 +117,105 @@ function openCalc(type) {
   area.innerHTML = "";
   result.innerHTML = "";
 
-  if (type === "ohm") {
-    area.innerHTML = `
-      <input type="number" id="voltage" placeholder="Voltage (V)">
-      <input type="number" id="resistance" placeholder="Resistance (Ω)">
-      <button onclick="calculateOhm()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
+if (type === "ohm") {
+  area.innerHTML = `
+    <h2>Ohm’s Law</h2>
+    <p><strong>Formula:</strong> V = I × R</p>
+    <p><em>Calculates Current (I)</em></p>
+    <p style="font-size:14px;">
+      Ohm’s Law states that current flowing through a conductor 
+      is directly proportional to the voltage and inversely proportional to resistance.
+    </p>
+
+    <input type="number" id="voltage" placeholder="Voltage (V)">
+    <input type="number" id="resistance" placeholder="Resistance (Ω)">
+    <button onclick="calculateOhm()">Calculate Current</button>
+    <button onclick="goBack()">Back</button>
+  `;
   }
-  else if (type === "joule") {
-    area.innerHTML = `
-      <input type="number" id="current" placeholder="Current (A)">
-      <input type="number" id="resistance" placeholder="Resistance (Ω)">
-      <input type="number" id="time" placeholder="Time (s)">
-      <button onclick="calculateJoule()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
-  }
-  else if (type === "power") {
-    area.innerHTML = `
-      <input type="number" id="voltage" placeholder="Voltage (V)">
-      <input type="number" id="current" placeholder="Current (A)">
-      <button onclick="calculatePower()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
-  }
-  else if (type === "series") {
-    area.innerHTML = `
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateSeries()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
-  }
-  else if (type === "parallel") {
-    area.innerHTML = `
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateParallel()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
-  }
-  else if (type === "divider") {
-    area.innerHTML = `
-      <input type="number" id="vin" placeholder="Input Voltage (V)">
-      <input type="number" id="r1" placeholder="R1 (Ω)">
-      <input type="number" id="r2" placeholder="R2 (Ω)">
-      <button onclick="calculateDivider()">Calculate</button>
-      <button onclick="goBack()">Back</button>
-    `;
-  }
+if (type === "joule") {
+  area.innerHTML = `
+    <h2>Joule’s Law</h2>
+    <p><strong>Formula:</strong> E = I² × R × t</p>
+    <p><em>Calculates Electrical Energy (J)</em></p>
+    <p style="font-size:14px;">
+      Joule’s Law explains how electrical energy is converted 
+      into heat when current flows through a resistor.
+    </p>
+
+    <input type="number" id="current" placeholder="Current (A)">
+    <input type="number" id="resistance" placeholder="Resistance (Ω)">
+    <input type="number" id="time" placeholder="Time (s)">
+    <button onclick="calculateJoule()">Calculate Energy</button>
+    <button onclick="goBack()">Back</button>
+  `;
+}
+if (type === "power") {
+  area.innerHTML = `
+    <h2>Electric Power</h2>
+    <p><strong>Formula:</strong> P = V × I</p>
+    <p><em>Calculates Power (Watts)</em></p>
+    <p style="font-size:14px;">
+      Electric power represents the rate at which 
+      electrical energy is transferred or consumed.
+    </p>
+
+    <input type="number" id="voltage" placeholder="Voltage (V)">
+    <input type="number" id="current" placeholder="Current (A)">
+    <button onclick="calculatePower()">Calculate Power</button>
+    <button onclick="goBack()">Back</button>
+  `;
+}
+if (type === "series") {
+  area.innerHTML = `
+    <h2>Series Resistance</h2>
+    <p><strong>Formula:</strong> Rₜ = R₁ + R₂</p>
+    <p><em>Calculates Total Resistance</em></p>
+    <p style="font-size:14px;">
+      In a series circuit, resistances add directly 
+      because current flows through each resistor sequentially.
+    </p>
+
+    <input type="number" id="r1" placeholder="R1 (Ω)">
+    <input type="number" id="r2" placeholder="R2 (Ω)">
+    <button onclick="calculateSeries()">Calculate Total Resistance</button>
+    <button onclick="goBack()">Back</button>
+  `;
+}
+if (type === "parallel") {
+  area.innerHTML = `
+    <h2>Parallel Resistance</h2>
+    <p><strong>Formula:</strong> 1/Rₜ = 1/R₁ + 1/R₂</p>
+    <p><em>Calculates Equivalent Resistance</em></p>
+    <p style="font-size:14px;">
+      In a parallel circuit, voltage is the same across 
+      components and total resistance decreases.
+    </p>
+
+    <input type="number" id="r1" placeholder="R1 (Ω)">
+    <input type="number" id="r2" placeholder="R2 (Ω)">
+    <button onclick="calculateParallel()">Calculate Equivalent Resistance</button>
+    <button onclick="goBack()">Back</button>
+  `;
+}
+
+if (type === "divider") {
+  area.innerHTML = `
+    <h2>Voltage Divider</h2>
+    <p><strong>Formula:</strong> Vout = Vin × (R₂ / (R₁ + R₂))</p>
+    <p><em>Calculates Output Voltage</em></p>
+    <p style="font-size:14px;">
+      A voltage divider splits input voltage into smaller 
+      voltages using two resistors in series.
+    </p>
+
+    <input type="number" id="vin" placeholder="Input Voltage (V)">
+    <input type="number" id="r1" placeholder="R1 (Ω)">
+    <input type="number" id="r2" placeholder="R2 (Ω)">
+    <button onclick="calculateDivider()">Calculate Output Voltage</button>
+    <button onclick="goBack()">Back</button>
+  `;
+}
 }
 
 function goBack() {
