@@ -3,93 +3,19 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ElectroSolve ⚡</title>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #141e30, #243b55);
-}
-
-.container {
-  width: 95%;
-  max-width: 850px;
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
-}
-
-h1 {
-  margin-bottom: 30px;
-  font-size: 28px;
-  color: #222;
-}
-
-button {
-  padding: 14px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: none;
-  background: #243b55;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background: #141e30;
-  transform: scale(1.05);
-}
-
-input {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-input:focus {
-  outline: none;
-  border-color: #243b55;
-  box-shadow: 0 0 10px rgba(36,59,85,0.3);
-}
-
-#calculatorArea {
-  margin-top: 20px;
-}
-
-#result {
-  margin-top: 20px;
-  font-weight: bold;
-  font-size: 18px;
-  color: #141e30;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
+body {min-height:100vh; display:flex; justify-content:center; align-items:flex-start; background:linear-gradient(135deg,#141e30,#243b55); padding:20px;}
+.container {width:95%; max-width:900px; background:#fff; padding:30px; border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,0.3); text-align:center;}
+h1 {margin-bottom:20px; color:#222;}
+button {padding:12px 20px; margin:5px 0; border:none; border-radius:10px; background:#243b55; color:white; cursor:pointer; font-weight:bold; width:100%; transition:0.3s;}
+button:hover {background:#141e30; transform:scale(1.05);}
+input {width:100%; padding:12px; margin:10px 0; border-radius:10px; border:1px solid #ddd; font-size:16px;}
+input:focus {outline:none; border-color:#243b55; box-shadow:0 0 10px rgba(36,59,85,0.3);}
+#calculatorArea {display:none; margin-top:20px;}
+#result {margin-top:20px; font-weight:bold; font-size:18px; color:#141e30;}
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -102,6 +28,7 @@ input:focus {
     <button onclick="openCalc('series')">Series Resistance</button>
     <button onclick="openCalc('parallel')">Parallel Resistance</button>
     <button onclick="openCalc('divider')">Voltage Divider</button>
+    <button onclick="window.location.href='theory.html'">Theory Section</button>
   </div>
 
   <div id="calculatorArea"></div>
@@ -111,163 +38,134 @@ input:focus {
 <script>
 const result = document.getElementById("result");
 
-function openCalc(type) {
-  document.getElementById("menu").style.display = "none";
-  const area = document.getElementById("calculatorArea");
-  area.innerHTML = "";
-  result.innerHTML = "";
-
-if (type === "ohm") {
-  area.innerHTML = `
-    <h2>Ohm’s Law</h2>
-    <p><strong>Formula:</strong> V = I × R</p>
-    <p><em>Calculates Current (I)</em></p>
-    <p style="font-size:14px;">
-      Ohm’s Law states that current flowing through a conductor 
-      is directly proportional to the voltage and inversely proportional to resistance.
-    </p>
-
-    <input type="number" id="voltage" placeholder="Voltage (V)">
-    <input type="number" id="resistance" placeholder="Resistance (Ω)">
-    <button onclick="calculateOhm()">Calculate Current</button>
-    <button onclick="goBack()">Back</button>
-  `;
-  }
-if (type === "joule") {
-  area.innerHTML = `
-    <h2>Joule’s Law</h2>
-    <p><strong>Formula:</strong> E = I² × R × t</p>
-    <p><em>Calculates Electrical Energy (J)</em></p>
-    <p style="font-size:14px;">
-      Joule’s Law explains how electrical energy is converted 
-      into heat when current flows through a resistor.
-    </p>
-
-    <input type="number" id="current" placeholder="Current (A)">
-    <input type="number" id="resistance" placeholder="Resistance (Ω)">
-    <input type="number" id="time" placeholder="Time (s)">
-    <button onclick="calculateJoule()">Calculate Energy</button>
-    <button onclick="goBack()">Back</button>
-  `;
-}
-if (type === "power") {
-  area.innerHTML = `
-    <h2>Electric Power</h2>
-    <p><strong>Formula:</strong> P = V × I</p>
-    <p><em>Calculates Power (Watts)</em></p>
-    <p style="font-size:14px;">
-      Electric power represents the rate at which 
-      electrical energy is transferred or consumed.
-    </p>
-
-    <input type="number" id="voltage" placeholder="Voltage (V)">
-    <input type="number" id="current" placeholder="Current (A)">
-    <button onclick="calculatePower()">Calculate Power</button>
-    <button onclick="goBack()">Back</button>
-  `;
-}
-if (type === "series") {
-  area.innerHTML = `
-    <h2>Series Resistance</h2>
-    <p><strong>Formula:</strong> Rₜ = R₁ + R₂</p>
-    <p><em>Calculates Total Resistance</em></p>
-    <p style="font-size:14px;">
-      In a series circuit, resistances add directly 
-      because current flows through each resistor sequentially.
-    </p>
-
-    <input type="number" id="r1" placeholder="R1 (Ω)">
-    <input type="number" id="r2" placeholder="R2 (Ω)">
-    <button onclick="calculateSeries()">Calculate Total Resistance</button>
-    <button onclick="goBack()">Back</button>
-  `;
-}
-if (type === "parallel") {
-  area.innerHTML = `
-    <h2>Parallel Resistance</h2>
-    <p><strong>Formula:</strong> 1/Rₜ = 1/R₁ + 1/R₂</p>
-    <p><em>Calculates Equivalent Resistance</em></p>
-    <p style="font-size:14px;">
-      In a parallel circuit, voltage is the same across 
-      components and total resistance decreases.
-    </p>
-
-    <input type="number" id="r1" placeholder="R1 (Ω)">
-    <input type="number" id="r2" placeholder="R2 (Ω)">
-    <button onclick="calculateParallel()">Calculate Equivalent Resistance</button>
-    <button onclick="goBack()">Back</button>
-  `;
-}
-
-if (type === "divider") {
-  area.innerHTML = `
-    <h2>Voltage Divider</h2>
-    <p><strong>Formula:</strong> Vout = Vin × (R₂ / (R₁ + R₂))</p>
-    <p><em>Calculates Output Voltage</em></p>
-    <p style="font-size:14px;">
-      A voltage divider splits input voltage into smaller 
-      voltages using two resistors in series.
-    </p>
-
-    <input type="number" id="vin" placeholder="Input Voltage (V)">
-    <input type="number" id="r1" placeholder="R1 (Ω)">
-    <input type="number" id="r2" placeholder="R2 (Ω)">
-    <button onclick="calculateDivider()">Calculate Output Voltage</button>
-    <button onclick="goBack()">Back</button>
-  `;
-}
-}
-
 function goBack() {
   document.getElementById("calculatorArea").innerHTML = "";
+  document.getElementById("calculatorArea").style.display = "none";
   document.getElementById("menu").style.display = "block";
   result.innerHTML = "";
 }
 
+function openCalc(type) {
+  document.getElementById("menu").style.display = "none";
+  const area = document.getElementById("calculatorArea");
+  area.style.display = "block";
+  area.innerHTML = "";
+  result.innerHTML = "";
+
+  if(type==="ohm") {
+    area.innerHTML = `
+      <h2>Ohm’s Law</h2>
+      <p><strong>Formula:</strong> V = I × R</p>
+      <p><em>Calculates Current (I)</em></p>
+      <input type="number" id="voltage" placeholder="Voltage (V)">
+      <input type="number" id="resistance" placeholder="Resistance (Ω)">
+      <button onclick="calculateOhm()">Calculate Current</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+
+  if(type==="joule") {
+    area.innerHTML = `
+      <h2>Joule’s Law</h2>
+      <p><strong>Formula:</strong> E = I² × R × t</p>
+      <p><em>Calculates Energy (J)</em></p>
+      <input type="number" id="current" placeholder="Current (A)">
+      <input type="number" id="resistance" placeholder="Resistance (Ω)">
+      <input type="number" id="time" placeholder="Time (s)">
+      <button onclick="calculateJoule()">Calculate Energy</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+
+  if(type==="power") {
+    area.innerHTML = `
+      <h2>Electric Power</h2>
+      <p><strong>Formula:</strong> P = V × I</p>
+      <p><em>Calculates Power (W)</em></p>
+      <input type="number" id="voltage" placeholder="Voltage (V)">
+      <input type="number" id="current" placeholder="Current (A)">
+      <button onclick="calculatePower()">Calculate Power</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+
+  if(type==="series") {
+    area.innerHTML = `
+      <h2>Series Resistance</h2>
+      <p><strong>Formula:</strong> Rₜ = R₁ + R₂</p>
+      <p><em>Total Resistance</em></p>
+      <input type="number" id="r1" placeholder="R1 (Ω)">
+      <input type="number" id="r2" placeholder="R2 (Ω)">
+      <button onclick="calculateSeries()">Calculate</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+
+  if(type==="parallel") {
+    area.innerHTML = `
+      <h2>Parallel Resistance</h2>
+      <p><strong>Formula:</strong> 1/Rₜ = 1/R₁ + 1/R₂</p>
+      <p><em>Equivalent Resistance</em></p>
+      <input type="number" id="r1" placeholder="R1 (Ω)">
+      <input type="number" id="r2" placeholder="R2 (Ω)">
+      <button onclick="calculateParallel()">Calculate</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+
+  if(type==="divider") {
+    area.innerHTML = `
+      <h2>Voltage Divider</h2>
+      <p><strong>Formula:</strong> Vout = Vin × R2/(R1+R2)</p>
+      <p><em>Output Voltage</em></p>
+      <input type="number" id="vin" placeholder="Input Voltage (V)">
+      <input type="number" id="r1" placeholder="R1 (Ω)">
+      <input type="number" id="r2" placeholder="R2 (Ω)">
+      <button onclick="calculateDivider()">Calculate</button>
+      <button onclick="goBack()">Back</button>
+    `;
+  }
+}
+
+// --- Calculation functions ---
 function calculateOhm() {
   const V = parseFloat(document.getElementById("voltage").value);
   const R = parseFloat(document.getElementById("resistance").value);
-  if (isNaN(V) || isNaN(R) || R === 0) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Current = " + (V/R).toFixed(3) + " A";
+  if(isNaN(V)||isNaN(R)||R===0) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Current = "+(V/R).toFixed(3)+" A";
 }
-
 function calculateJoule() {
   const I = parseFloat(document.getElementById("current").value);
   const R = parseFloat(document.getElementById("resistance").value);
   const t = parseFloat(document.getElementById("time").value);
-  if (isNaN(I) || isNaN(R) || isNaN(t)) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Energy = " + (I*I*R*t).toFixed(3) + " J";
+  if(isNaN(I)||isNaN(R)||isNaN(t)) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Energy = "+(I*I*R*t).toFixed(3)+" J";
 }
-
 function calculatePower() {
   const V = parseFloat(document.getElementById("voltage").value);
   const I = parseFloat(document.getElementById("current").value);
-  if (isNaN(V) || isNaN(I)) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Power = " + (V*I).toFixed(3) + " W";
+  if(isNaN(V)||isNaN(I)) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Power = "+(V*I).toFixed(3)+" W";
 }
-
 function calculateSeries() {
   const R1 = parseFloat(document.getElementById("r1").value);
   const R2 = parseFloat(document.getElementById("r2").value);
-  if (isNaN(R1) || isNaN(R2)) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Total Resistance = " + (R1+R2).toFixed(3) + " Ω";
+  if(isNaN(R1)||isNaN(R2)) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Total Resistance = "+(R1+R2).toFixed(3)+" Ω";
 }
-
 function calculateParallel() {
   const R1 = parseFloat(document.getElementById("r1").value);
   const R2 = parseFloat(document.getElementById("r2").value);
-  if (isNaN(R1) || isNaN(R2) || R1 === 0 || R2 === 0) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Parallel Resistance = " + (1/((1/R1)+(1/R2))).toFixed(3) + " Ω";
+  if(isNaN(R1)||isNaN(R2)||R1===0||R2===0) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Parallel Resistance = "+(1/((1/R1)+(1/R2))).toFixed(3)+" Ω";
 }
-
 function calculateDivider() {
   const Vin = parseFloat(document.getElementById("vin").value);
   const R1 = parseFloat(document.getElementById("r1").value);
   const R2 = parseFloat(document.getElementById("r2").value);
-  if (isNaN(Vin) || isNaN(R1) || isNaN(R2) || (R1+R2) === 0) return result.innerHTML = "Enter valid values.";
-  result.innerHTML = "Output Voltage = " + (Vin*(R2/(R1+R2))).toFixed(3) + " V";
+  if(isNaN(Vin)||isNaN(R1)||isNaN(R2)||(R1+R2)===0) return result.innerHTML="Enter valid values.";
+  result.innerHTML="Output Voltage = "+(Vin*(R2/(R1+R2))).toFixed(3)+" V";
 }
-  <button onclick="window.location.href='theory.html'">Theory Section</button>
 </script>
 
 </body>
