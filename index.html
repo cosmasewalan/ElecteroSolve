@@ -4,16 +4,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ElectroSolve ⚡</title>
 <style>
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
-body {min-height:100vh; display:flex; justify-content:center; align-items:flex-start; background:linear-gradient(135deg,#141e30,#243b55); padding:20px;}
-.container {width:95%; max-width:900px; background:#ffffff; padding:30px; border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,0.3); text-align:center; animation: fadeIn 1s ease-in-out;}
-h1 {margin-bottom:20px; color:#222;}
-button {padding:12px 20px; margin:5px 0; border:none; border-radius:10px; background:#243b55; color:white; cursor:pointer; font-weight:bold; width:100%; transition:0.3s;}
-button:hover {background:#141e30; transform:scale(1.05);}
-input {width:100%; padding:12px; margin:10px 0; border-radius:10px; border:1px solid #ddd; font-size:16px;}
-input:focus {outline:none; border-color:#243b55; box-shadow:0 0 10px rgba(36,59,85,0.3);}
-#calculatorArea {display:none; margin-top:20px;}
-#result {margin-top:20px; font-weight:bold; font-size:18px; color:#141e30;}
+/* Calculation buttons */
+.calc-btn {
+  background: #243b55;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.calc-btn:hover {
+  background: #141e30;
+  transform: scale(1.05);
+}
+
+/* Theory button */
+.theory-btn {
+  background: #ff6600;   /* bright orange to stand out */
+  color: white;
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  border: 2px solid #cc5200;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.theory-btn:hover {
+  background: #ff8533;   /* lighter orange on hover */
+  transform: scale(1.05);
+}
 </style>
 </head>
 <body>
