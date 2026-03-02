@@ -95,6 +95,11 @@ a:hover {
 
     <p>Don't have an account? <a href="register.html">Sign Up</a></p>
     <p id="message" style="color:red; font-weight:bold;"></p>
+     msg.style.color = "green";
+  msg.innerHTML = "register successful! Redirecting to register...";
+  setTimeout(() => {
+    window.location.href = "register.html";
+  }, 1500); 
   </div>
 
 <script>
